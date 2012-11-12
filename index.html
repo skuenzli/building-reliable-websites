@@ -72,10 +72,10 @@
 				
 				<section>
 					<section>
-						<h2>determine expected site load</h2>
+						<h3>determine expected site load</h3>
 					</section>
 					<section>
-						<h2>Measurements</h2>
+						<h2>Key Metrics</h2>
 						<ul>
 							<li>Throughput<span class="fragment">: requests per second</span></li>
 							<li>Performance<span class="fragment">: response time</span></li>
@@ -95,7 +95,7 @@
 						</aside>
 					</section>
 					<section>
-						<h2>Define a Service Level Agreement</h2>
+						<h3>Define a Service Level Agreement</h3>
 						<br/>
 						<ul>
 							<li class="fragment">Throughput: 42 requests per second</li>
@@ -104,7 +104,7 @@
 						<br/>
 					</section>
 					<section>
-						<h2>Don't Forget!</h2>
+						<h3>Don't Forget!</h3>
 						<br/>
 						<ul>
 							<li class="fragment">network latency and bandwidth</li>
@@ -112,11 +112,53 @@
 						</ul>
 					</section>
 					<section>
-						<h2>HOWTO: measure</h2>
+						<h3>HOWTO: measure historical throughput</h3>
 						<pre><code contenteditable>
 # total number of GETs to /myservice for a given day
 grep -c "GET /myservice" /all/my/logs/app*/access.log.2012-11-16
+
+# total number of GETs to /myservice at peak hour
+grep -c "2012-11-11 17:.*GET /myservice" /all/my/logs/app*/access.log.2012-11-16
 						</code></pre>
+					</section>
+					<section>
+						<h3>HOWTO: measure response time</h3>
+						<pre><code contenteditable>
+# processing times recorded by server in access log
+grep "GET /myservice" /all/my/logs/app*/access.log.2012-11-16 | \
+  cut -d\" -f6 | sort -nr > service.access_times.2012-11-16
+						</code></pre>
+						<br/>
+						<p class="fragment">what about network latency and bandwidth?</p>
+						<br/>
+						<p class="fragment">does request fit in the client's resource budget? 50/95/99%?</p>
+					</section>
+					<section>
+						<p>all models are wrong; some models are useful</p>
+						<br/>
+						<div class="fragment">
+							<p>model +/- 20%</p>
+							<ol>
+								<li>count</li>
+								<li>compute</li>
+								<li>judge</li>
+							</ol>
+						</div>
+						<br/>
+						<br/>
+						<div class="fragment">
+							<p>adjust for</p>
+							<ol>
+								<li>growth</li>
+								<li>seasonal loading</li>
+								<li>margin of error</li>
+							</ol>
+						</div>
+						<aside class="notes">
+						count actual requests in server logs
+						compute expected request patterns from firebug/chrome waterfall charts
+						defer to judgement of 'experts' - use with extreme caution
+						</aside>
 					</section>
 				</section>
 				<section>
@@ -183,9 +225,12 @@ grep -c "GET /myservice" /all/my/logs/app*/access.log.2012-11-16
 				<section>
 				    <p>Resources</p>
 					<ul>
+						<li>This presentation: https://github.com/skuenzli/building-reliable-websites</li>
+						<li>Concurrency Limiting Filter: https://github.com/skuenzli/simplyreliable</li>
 					    <li>Web Operations: http://shop.oreilly.com/product/0636920000136.do</li>
 						<li>Circuit Breaker Pattern: http://doc.akka.io/docs/akka/2.1.0-RC1/common/circuitbreaker.html</li>
 						<li>Gatling: http://gatling-tool.org</li>
+						<li>USL</li>
 					</ul>
 				</section>
 				<section>
