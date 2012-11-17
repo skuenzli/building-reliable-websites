@@ -64,7 +64,7 @@
 					<h3>The Process</h3>
 					<ol>
 						<li>determine expected site load</li>
-						<li>validate site can handle expected load</li>
+						<li>validate site handles expected load</li>
 						<li>stay operational when load exceeds expectations</li>
 						<li class="fragment">profit!</li>
 					</ol>
@@ -72,7 +72,9 @@
 				
 				<section>
 					<section>
-						<h3>determine expected site load</h3>
+					    <br/>
+					    <br/>
+						<h2>determine expected site load</h2>
 					</section>
 					<section>
 						<h2>Key Metrics</h2>
@@ -163,7 +165,9 @@ grep "GET /myservice" /all/my/logs/app*/access.log.2012-11-16 | \
 				</section>
 				<section>
 					<section>
-						<h2>validate site can handle expected load</h2>
+					    <br/>
+					    <br/>
+						<h2>validate site handles expected load</h2>
 					</section>
 					<section>
 						<h3>validation process</h3>
@@ -188,9 +192,27 @@ grep "GET /myservice" /all/my/logs/app*/access.log.2012-11-16 | \
 						<br/>
 						<p>gatling-tool.org</p>
 					</section>
+					<section>
+						<h3>build simulation</h3>
+					</section>
+					<section>
+						<h3>run simulation multiple times / periodically</h3>
+						<ul>
+							<li>gather statistically significant results</li>
+							<li>establish a baseline</li>
+							<li>verify site does [not meet] SLAs</li>
+							<li>detect changes over time</li>
+						</ul>
+					</section>
+					<section>
+						<h3>analyze trends</h3>
+						<p>detect changes in trend with control charts</p>
+					</section>
 				</section>
 				<section>
 					<section>
+					    <br/>
+					    <br/>
 						<h2>stay operational when load exceeds expectations</h2>
 					</section>
 					<section>
