@@ -117,18 +117,23 @@
 						<h3>HOWTO: measure historical throughput</h3>
 						<pre><code contenteditable>
 # total number of GETs to /myservice for a given day
-grep -c "GET /myservice" /all/my/logs/app*/access.log.2012-11-16
+grep -c 'GET /myservice' logs/app*/access.log.2012-11-16
+
+# estimate peak hour for service from sample
+grep 'GET /myservice' logs/app??5/access.log.2012-11-16 | \
+  perl -nle 'print m|/201\d:(\d\d):|' | sort -n | uniq -c
 
 # total number of GETs to /myservice at peak hour
-grep -c "2012-11-11 17:.*GET /myservice" /all/my/logs/app*/access.log.2012-11-16
+grep -c '2012-11-16 17:.*GET /myservice' \
+  logs/app*/access.log.2012-11-16
 						</code></pre>
 					</section>
 					<section>
 						<h3>HOWTO: measure response time</h3>
 						<pre><code contenteditable>
 # processing times recorded by server in access log
-grep "GET /myservice" /all/my/logs/app*/access.log.2012-11-16 | \
-  cut -d\" -f6 | sort -nr > service.access_times.2012-11-16
+grep "GET /myservice" logs/app*/access.log.2012-11-16 | \
+  cut -d\" -f7 | sort -n > service.access_times.2012-11-16
 						</code></pre>
 						<br/>
 						<p class="fragment">what about network latency and bandwidth?</p>
@@ -138,24 +143,33 @@ grep "GET /myservice" /all/my/logs/app*/access.log.2012-11-16 | \
 					<section>
 						<p>all models are wrong; some models are useful</p>
 						<br/>
-						<div class="fragment">
-							<p>model +/- 20%</p>
-							<ol>
-								<li>count</li>
-								<li>compute</li>
-								<li>judge</li>
-							</ol>
-						</div>
+						<table>
+						    <tr>
+						    	<td width="40%">
+									<div class="fragment">
+									<p>model +/- 20%</p>
+									<ol>
+										<li>count</li>
+										<li>compute</li>
+										<li>judge</li>
+									</ol>
+								</div>
+								</td>
+								<td width="20%"/>
+								<td width="40%">
+									<div class="fragment">
+										<p>adjust for</p>
+										<ol>
+											<li>growth</li>
+											<li>seasonal loading</li>
+											<li>margin of error</li>
+										</ol>
+									</div>
+								</td>
+						    </tr>
+						</table>
 						<br/>
 						<br/>
-						<div class="fragment">
-							<p>adjust for</p>
-							<ol>
-								<li>growth</li>
-								<li>seasonal loading</li>
-								<li>margin of error</li>
-							</ol>
-						</div>
 						<aside class="notes">
 						count actual requests in server logs
 						compute expected request patterns from firebug/chrome waterfall charts
